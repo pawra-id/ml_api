@@ -27,10 +27,16 @@ async def predict(text: List[str]):
     preprocessed_text = data_preprocessing(text)
     padded_sequences = tokenize(preprocessed_text)
     result = model.predict(padded_sequences)
-    
+    weight = 0
+    denominator = 0
+    for i in range(len(result)):
+        weight += (i+1) * result[i]
+        denominator += (i+1)
+    result = weight / denominator
+
     result = np.mean(result, axis=0)
     
-    return result.tolist()[0]
+    return result.tolist()
 
 
 
