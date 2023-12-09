@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, status
 import numpy as np
 from typing import List
 from tensorflow.keras.models import load_model
@@ -23,6 +23,10 @@ async def root():
 
 @app.post("/predict")
 async def predict(text: List[str]):
+    #if text empty, return http exception
+    if len(text) == 0:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Activity is empty")
+    
     model = load_model('app/model/bidirectional_lstm.h5')
     preprocessed_text = data_preprocessing(text)
     padded_sequences = tokenize(preprocessed_text)
