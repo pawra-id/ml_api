@@ -10,7 +10,7 @@ def tokenize(preprocessed_text):
     tokenizer.word_index = word_index
 
     sequences = tokenizer.texts_to_sequences(preprocessed_text)
-    padded_sequences = pad_sequences(sequences, padding='post', maxlen=100)
+    padded_sequences = pad_sequences(sequences, padding='post', maxlen=150)
 
     return padded_sequences
   
